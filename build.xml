@@ -1,0 +1,110 @@
+<project name="lululemon FlexPLM" default="install">
+
+        <description>
+                lululemon FlexPLM Build File
+        </description>
+
+        <!-- Required for "if" and other statements -->
+        <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+        <!-- set global properties for this build -->
+        <property environment="env"/>
+		<echo message="WT_HOME is set to = ${env.WT_HOME}" />
+
+        <property name="WT_BUILD" location="/opt/ptc/Windchill_11.0/Windchill"/>
+        <property name="target" value="1.8" />
+        <property name="source" value="1.8" />
+        <!-- Set classpath -->
+          <path id="FlexPLM11.0_Java.classpath">
+                <pathelement path="${WT_BUILD}/codebase"/>
+                <pathelement location="bin" />
+                <!-- codebase -->
+                <fileset dir="${WT_BUILD}/lib">
+                  <!-- include all windchill libs -->
+                  <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="${WT_BUILD}/codebase/WEB-INF/lib">
+                  <!-- include all windchill libs -->
+                  <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="${WT_BUILD}/srclib">
+                  <!-- include all windchill libs -->
+                  <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="${WT_BUILD}/srclib/wnc">
+                  <!-- include all windchill libs -->
+                  <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="${WT_BUILD}/srclib/tool">
+                  <!-- include all windchill libs -->
+                  <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="${WT_BUILD}/srclib/prowt">
+                  <!-- include all windchill libs -->
+                  <include name="**/*.jar"/>
+                </fileset>
+          </path>
+
+		<target name="build" depends="init">
+
+                <echo message="-----------------------------------------------------"/>
+				<echo message="'config' for CONFIG"/>
+				<echo message="'dev' for DEV"/>
+				<echo message="'qa' for QA"/>
+				<echo message="'stage' for STAGE"/>
+				<echo message="'training' for TRAINING"/>
+				<echo message="'prod' for PRODUCTION"/>
+				<echo message="-----------------------------------------------------"/>
+				
+				<copy todir="${install.scripts.dir}">
+                        <fileset dir="${dist.scripts.dir}"/>
+                </copy>
+				
+        </target>
+
+        <target name="init">
+
+                <!-- Load property files -->
+                <property file="local.properties"/>
+                <property file="build.properties"/>
+
+                <property name="dist.dir" location="."/>
+                <property name="dist.scripts.dir" location="${dist.dir}/scripts"/>
+                <property name="install.wt_home.dir" location="${WT_BUILD}"/>
+                <property name="install.scripts.dir" location="${install.wt_home.dir}/scripts"/>
+
+        </target>
+
+        <target name="install" depends="init" description="install application files">
+                <copy todir="${install.codebase.dir}">
+                        <fileset dir="${dist.dir}/codebase">
+                                <include name="com/**"/>
+                        </fileset>
+                </copy>
+                <copy todir="${install.jsp.dir}">
+                        <fileset dir="${dist.jsp.dir}"/>
+                </copy>
+                <copy todir="${install.codebase.dir}">
+                        <fileset dir="${dist.properties.dir}"/>
+                </copy>
+                <copy todir="${install.codebase.dir}/images">
+                        <fileset dir="${dist.images.dir}"/>
+                </copy>
+				<copy todir="${install.codebase.dir}/rfa/images">
+                        <fileset dir="${dist.rfaImages.dir}"/>
+                </copy>
+				<copy todir="${install.jsp.dir}/css">
+                        <fileset dir="${dist.css.dir}"/>
+                </copy>
+                <copy todir="${install.scripts.dir}">
+                        <fileset dir="${dist.scripts.dir}"/>
+                </copy>
+
+                <copy todir="${install.scripts.dir}">
+                        <fileset dir="${dist.scripts.dir}"/>
+                </copy>
+        </target>
+
+  
+
+</project>
