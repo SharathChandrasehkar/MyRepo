@@ -48,12 +48,7 @@
 		<target name="build" depends="init">
 
                 <echo message="-----------------------------------------------------"/>
-				<echo message="'config' for CONFIG"/>
-				<echo message="'dev' for DEV"/>
-				<echo message="'qa' for QA"/>
-				<echo message="'stage' for STAGE"/>
-				<echo message="'training' for TRAINING"/>
-				<echo message="'prod' for PRODUCTION"/>
+				<echo message="Deploying the changes..."/>
 				<echo message="-----------------------------------------------------"/>
 				
 				<copy todir="${install.scripts.dir}">
